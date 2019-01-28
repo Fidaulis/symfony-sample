@@ -13,17 +13,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DitEmailNewsletterController extends Controller
 {
+
+    /**
+     * @return \App\Devintech\Service\MetierManagerBundle\Metier\DitEmailNewsletter\ServiceMetierEmailNewsletter|object
+     */
+    public function setEmailSender()
+    {
+        return $this->get(ServiceName::SRV_METIER_EMAIL_NEWSLETTER);
+    }
+
     /**
      * Afficher tout les emails
      * @return Render page
      */
-    public function indexAction()
+    public function indexAction(): Render
     {
-        // Récupérer manager
-        $_email_manager = $this->get(ServiceName::SRV_METIER_EMAIL_NEWSLETTER);
-
         // Récupérer tout les emails
-        $_emails = $_email_manager->getAllEmailNewsletter();
+        $_emails = $this->setEmailSender()->getAllEmailNewsletter();
 
         return $this->render('AdminBundle:DitEmailNewsletter:index.html.twig', array(
             'email_newsletters' => $_emails
@@ -35,7 +41,7 @@ class DitEmailNewsletterController extends Controller
      * @param DitEmailNewsletter $_email
      * @return Render page
      */
-    public function editAction(DitEmailNewsletter $_email)
+    public function editAction(DitEmailNewsletter $_email): Render
     {
         if (!$_email) {
             throw $this->createNotFoundException('Unable to find DitEmailNewsletter entity.');
@@ -54,21 +60,15 @@ class DitEmailNewsletterController extends Controller
      * @param Request $_request requête
      * @return Render page
      */
-    public function newAction(Request $_request)
+    public function newAction(Request $_request): Render
     {
-        // Récupérer manager
-        $_email_manager = $this->get(ServiceName::SRV_METIER_EMAIL_NEWSLETTER);
-
         $_email = new DitEmailNewsletter();
         $_form  = $this->createCreateForm($_email);
         $_form->handleRequest($_request);
 
         if ($_form->isSubmitted() && $_form->isValid()) {
-            // Enregistrement email
-            $_email_manager->saveEmailNewsletter($_email, 'new');
-
-            $_email_manager->setFlash('success', "Email abonné ajouté");
-
+            $this->setEmailSender()->saveEmailNewsletter($_email,'new');
+            $this->setEmailSender()->setFlash('success','Email abonné ajouté');
             return $this->redirect($this->generateUrl('email_newsletter_index'));
         }
 
@@ -84,11 +84,8 @@ class DitEmailNewsletterController extends Controller
      * @param DitEmailNewsletter $_email
      * @return Render page
      */
-    public function updateAction(Request $_request, DitEmailNewsletter $_email)
+    public function updateAction(Request $_request, DitEmailNewsletter $_email): Render
     {
-        // Récupérer manager
-        $_email_manager = $this->get(ServiceName::SRV_METIER_EMAIL_NEWSLETTER);
-
         if (!$_email) {
             throw $this->createNotFoundException('Unable to find DitEmailNewsletter entity.');
         }
@@ -97,9 +94,9 @@ class DitEmailNewsletterController extends Controller
         $_edit_form->handleRequest($_request);
 
         if ($_edit_form->isValid()) {
-            $_email_manager->saveEmailNewsletter($_email, 'update');
 
-            $_email_manager->setFlash('success', "Email abonné modifié");
+            $this->setEmailSender()->saveEmailNewsletter($_email,'update');
+            $this->setEmailSender()->setFlash('success','Email abonné modifié');
 
             return $this->redirect($this->generateUrl('email_newsletter_index'));
         }
@@ -148,17 +145,13 @@ class DitEmailNewsletterController extends Controller
      */
     public function deleteAction(Request $_request, DitEmailNewsletter $_email)
     {
-        // Récupérer manager
-        $_email_manager = $this->get(ServiceName::SRV_METIER_EMAIL_NEWSLETTER);
 
         $_form = $this->createDeleteForm($_email);
         $_form->handleRequest($_request);
 
         if ($_request->isMethod('GET') || ($_form->isSubmitted() && $_form->isValid())) {
-            // Suppression email
-            $_email_manager->deleteEmailNewsletter($_email);
-
-            $_email_manager->setFlash('success', 'Email abonné supprimé');
+            $this->setEmailSender()->deleteEmailNewsletter($_email);
+            $this->setEmailSender()->setFlash('success', 'Email abonné supprimé');
         }
 
         return $this->redirectToRoute('email_newsletter_index');
@@ -184,20 +177,17 @@ class DitEmailNewsletterController extends Controller
      */
     public function deleteGroupAction(Request $_request)
     {
-        // Récupérer manager
-        $_email_manager = $this->get(ServiceName::SRV_METIER_EMAIL_NEWSLETTER);
-
         if ($_request->request->get('_group_delete') !== null) {
             $_ids = $_request->request->get('delete');
             if ($_ids == null) {
-                $_email_manager->setFlash('error', 'Veuillez sélectionner un élément à supprimer');
+                $this->setEmailSender()->setFlash('error', 'Veuillez sélectionner un élément à supprimer');
 
                 return $this->redirect($this->generateUrl('email_newsletter_index'));
             }
-            $_email_manager->deleteGroupEmailNewsletter($_ids);
+            $this->setEmailSender()->deleteGroupEmailNewsletter($_ids);
         }
 
-        $_email_manager->setFlash('success', 'Eléments sélectionnés supprimés');
+        $this->setEmailSender()->setFlash('success', 'Eléments sélectionnés supprimés');
 
         return $this->redirect($this->generateUrl('email_newsletter_index'));
     }

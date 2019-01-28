@@ -37,7 +37,7 @@ class SecurityController extends BaseSecurityController
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
 
-        if (class_exists('\Symfony\Component\Security\Core\Security')) {
+        if (class_exists(Security::class)) {
             $authErrorKey    = Security::AUTHENTICATION_ERROR;
             $lastUsernameKey = Security::LAST_USERNAME;
         } else {

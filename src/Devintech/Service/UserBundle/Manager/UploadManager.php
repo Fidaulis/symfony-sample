@@ -23,7 +23,7 @@ class UploadManager
      * @param integer $_id identifiant utilisateur
      * @return array
      */
-    public function deleteImageById($_id)
+    public function deleteImageById($_id): ?array
     {
         $_user = $this->_em->getRepository('UserBundle:User')->find($_id);
         

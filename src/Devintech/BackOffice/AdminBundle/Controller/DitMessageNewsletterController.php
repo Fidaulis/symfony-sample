@@ -17,7 +17,7 @@ class DitMessageNewsletterController extends Controller
      * Afficher tout les messages
      * @return Render page
      */
-    public function indexAction()
+    public function indexAction(): Render
     {
         // Récupérer manager
         $_message_manager = $this->get(ServiceName::SRV_METIER_MESSAGE_NEWSLETTER);
@@ -35,7 +35,7 @@ class DitMessageNewsletterController extends Controller
      * @param DitMessageNewsletter $_message
      * @return Render page
      */
-    public function editAction(DitMessageNewsletter $_message)
+    public function editAction(DitMessageNewsletter $_message): Render
     {
         if (!$_message) {
             throw $this->createNotFoundException('Unable to find DitMessageNewsletter entity.');
@@ -54,7 +54,7 @@ class DitMessageNewsletterController extends Controller
      * @param Request $_request requête
      * @return Render page
      */
-    public function newAction(Request $_request)
+    public function newAction(Request $_request): Render
     {
         // Récupérer manager
         $_message_manager = $this->get(ServiceName::SRV_METIER_MESSAGE_NEWSLETTER);
@@ -84,7 +84,7 @@ class DitMessageNewsletterController extends Controller
      * @param DitMessageNewsletter $_message
      * @return Render page
      */
-    public function updateAction(Request $_request, DitMessageNewsletter $_message)
+    public function updateAction(Request $_request, DitMessageNewsletter $_message): Render
     {
         // Récupérer manager
         $_message_manager = $this->get(ServiceName::SRV_METIER_MESSAGE_NEWSLETTER);
@@ -116,7 +116,7 @@ class DitMessageNewsletterController extends Controller
      * @param DitMessageNewsletter $_message
      * @return Render page
      */
-    public function sendUpdateAction(Request $_request, DitMessageNewsletter $_message)
+    public function sendUpdateAction(Request $_request, DitMessageNewsletter $_message): Render
     {
         // Récupérer manager
         $_message_manager = $this->get(ServiceName::SRV_METIER_MESSAGE_NEWSLETTER);
@@ -263,7 +263,7 @@ class DitMessageNewsletterController extends Controller
      * @param DitMessageNewsletter $_message
      * @return Redirect liste message
      */
-    public function sendAction(DitMessageNewsletter $_message)
+    public function sendAction(DitMessageNewsletter $_message): Redirect
     {
         if (!$_message) {
             throw $this->createNotFoundException('Unable to find DitMessageNewsletter entity.');

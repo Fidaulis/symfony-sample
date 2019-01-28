@@ -14,7 +14,7 @@ class DitDashboardController extends Controller
      * Afficher le tableau de bord
      * @return Render page
      */
-    public function indexAction()
+    public function indexAction(): Render
     {
         return $this->render('AdminBundle:DitDashboard:index.html.twig');
     }

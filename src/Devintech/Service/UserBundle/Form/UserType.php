@@ -14,6 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Devintech\Service\MetierManagerBundle\Utils\RoleName;
+use App\Devintech\Service\MetierManagerBundle\Entity\DitRole;
+use App\Devintech\Service\UserBundle\Entity\User;
+use FOS\UserBundle\Form\Type\RegistrationFormType;
 
 class UserType extends AbstractType
 {
@@ -84,11 +87,11 @@ class UserType extends AbstractType
 
             ->add('ditRole', EntityType::class, array(
                 'label'         => 'Rôle',
-                'class'         => 'App\Devintech\Service\MetierManagerBundle\Entity\DitRole',
+                'class'         => DitRole::class,
                 'query_builder' => function (EntityRepository $_er) {
                     $_query_builder = $_er->createQueryBuilder('r');
 
-                    if ($this->user_role == RoleName::ID_ROLE_ADMIN) {
+                    if ($this->user_role === RoleName::ID_ROLE_ADMIN) {
                         $_query_builder
                             ->andWhere('r.id <> :id_role')
                             ->setParameter('id_role', RoleName::ID_ROLE_SUPERADMIN);
@@ -131,14 +134,14 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Devintech\Service\UserBundle\Entity\User',
+            'data_class' => User::class,
             'user_role'  => null
         ));
     }
 
     public function getParent()
     {
-        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
+        return RegistrationFormType::class;
     }
 
     /**

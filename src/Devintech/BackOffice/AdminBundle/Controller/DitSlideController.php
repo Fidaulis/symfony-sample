@@ -13,17 +13,23 @@ use App\Devintech\Service\MetierManagerBundle\Entity\DitSlide;
  */
 class DitSlideController extends Controller
 {
+
+    /**
+     * @return \App\Devintech\Service\MetierManagerBundle\Metier\DitSlide\ServiceMetierDitSlide|object
+     */
+    public function slideMetier()
+    {
+        return $this->get(ServiceName::SRV_METIER_SLIDE);
+    }
+
     /**
      * Afficher tout les slides
      * @return Render page
      */
     public function indexAction()
     {
-        // Récupérer manager
-        $_slide_manager = $this->get(ServiceName::SRV_METIER_SLIDE);
-
         // Récupérer tout les slide
-        $_slides = $_slide_manager->getAllDitSlide();
+        $_slides = $this->slideMetier()->getAllDitSlide();
 
         return $this->render('AdminBundle:DitSlide:index.html.twig', array(
             'slides' => $_slides
@@ -57,7 +63,7 @@ class DitSlideController extends Controller
     public function newAction(Request $_request)
     {
         // Récupérer manager
-        $_slide_manager = $this->get(ServiceName::SRV_METIER_SLIDE);
+//        $_slide_manager = $this->get(ServiceName::SRV_METIER_SLIDE);
 
         $_slide = new DitSlide();
         $_form  = $this->createCreateForm($_slide);
@@ -66,12 +72,9 @@ class DitSlideController extends Controller
         if ($_form->isSubmitted() && $_form->isValid()) {
             // Traitement image
             $_image = $_form['sldImageUrl']->getData();
-
             // Enregistrement slide
-            $_slide_manager->addSlide($_slide, $_image);
-
-            $_slide_manager->setFlash('success', "Slide ajouté");
-
+            $this->slideMetier()->addSlide($_slide, $_image);
+            $this->slideMetier()->setFlash('success', "Slide ajouté");
             return $this->redirect($this->generateUrl('slide_index'));
         }
 
@@ -90,7 +93,7 @@ class DitSlideController extends Controller
     public function updateAction(Request $_request, DitSlide $_slide)
     {
         // Récupérer manager
-        $_slide_manager = $this->get(ServiceName::SRV_METIER_SLIDE);
+//        $_slide_manager = $this->get(ServiceName::SRV_METIER_SLIDE);
 
         if (!$_slide) {
             throw $this->createNotFoundException('Unable to find DitSlide entity.');
@@ -104,9 +107,9 @@ class DitSlideController extends Controller
             $_image = $_edit_form['sldImageUrl']->getData();
 
             // Enregistrement slide
-            $_slide_manager->updateSlide($_slide, $_image);
+            $this->slideMetier()->updateSlide($_slide, $_image);
 
-            $_slide_manager->setFlash('success', "Slide modifié");
+            $this->slideMetier()->setFlash('success', "Slide modifié");
 
             return $this->redirect($this->generateUrl('slide_index'));
         }
@@ -155,17 +158,14 @@ class DitSlideController extends Controller
      */
     public function deleteAction(Request $_request, DitSlide $_slide)
     {
-        // Récupérer manager
-        $_slide_manager = $this->get(ServiceName::SRV_METIER_SLIDE);
 
         $_form = $this->createDeleteForm($_slide);
         $_form->handleRequest($_request);
 
         if ($_request->isMethod('GET') || ($_form->isSubmitted() && $_form->isValid())) {
             // Suppression slide
-            $_slide_manager->deleteDitSlide($_slide);
-
-            $_slide_manager->setFlash('success', 'Slide supprimé');
+            $this->slideMetier()->deleteDitSlide($_slide);
+            $this->slideMetier()->setFlash('success', 'Slide supprimé');
         }
 
         return $this->redirectToRoute('slide_index');
@@ -192,19 +192,19 @@ class DitSlideController extends Controller
     public function deleteGroupAction(Request $_request)
     {
         // Récupérer manager
-        $_slide_manager = $this->get(ServiceName::SRV_METIER_SLIDE);
+//        $_slide_manager = $this->get(ServiceName::SRV_METIER_SLIDE);
 
         if ($_request->request->get('_group_delete') !== null) {
             $_ids = $_request->request->get('delete');
             if ($_ids == null) {
-                $_slide_manager->setFlash('error', 'Veuillez sélectionner un élément à supprimer');
+                $this->slideMetier()->setFlash('error', 'Veuillez sélectionner un élément à supprimer');
 
                 return $this->redirect($this->generateUrl('slide_index'));
             }
-            $_slide_manager->deleteGroupDitSlide($_ids);
+            $this->slideMetier()->deleteGroupDitSlide($_ids);
         }
 
-        $_slide_manager->setFlash('success', 'Eléments sélectionnés supprimés');
+        $this->slideMetier()->setFlash('success', 'Eléments sélectionnés supprimés');
 
         return $this->redirect($this->generateUrl('slide_index'));
     }
