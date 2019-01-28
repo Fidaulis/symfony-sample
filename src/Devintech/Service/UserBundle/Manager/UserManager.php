@@ -10,11 +10,20 @@ use App\Devintech\Service\MetierManagerBundle\Utils\RoleName;
 use Symfony\Component\DependencyInjection\Container;
 use FOS\UserBundle\Model\UserInterface;
 
+/**
+ * Class UserManager
+ * @package App\Devintech\Service\UserBundle\Manager
+ */
 class UserManager
 {
     private $_entity_manager;
     private $_container;
 
+    /**
+     * UserManager constructor.
+     * @param EntityManager $_entity_manager
+     * @param Container $_container
+     */
     public function __construct(EntityManager $_entity_manager, Container $_container)
     {
         $this->_entity_manager  = $_entity_manager;
@@ -22,18 +31,17 @@ class UserManager
     }
 
     /**
-     * Ajouter un message flash
-     * @param string $_type
-     * @param string $_message
+     * @param $_type
+     * @param $_message
      * @return mixed
+     * @throws \Exception
      */
     public function setFlash($_type, $_message) {
         return $this->_container->get('session')->getFlashBag()->add($_type, $_message);
     }
 
     /**
-     * Récuperer le repository utilisateur
-     * @return array
+     * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository
      */
     public function getRepository()
     {
@@ -41,8 +49,8 @@ class UserManager
     }
 
     /**
-     * Récuperer tout les utilisateurs
-     * @return array
+     * @return mixed
+     * @throws \Exception
      */
     public function getAllUser()
     {
@@ -92,9 +100,8 @@ class UserManager
     }
 
     /**
-     * Récuperer un utilisateur par identifiant
-     * @param Integer $_id
-     * @return array
+     * @param $_id
+     * @return object|null
      */
     public function getUserById($_id)
     {
@@ -106,12 +113,12 @@ class UserManager
      * @param string $_username
      * @return boolean
      */
-    public function isUsernameExist($_username) {
+    public function isUsernameExist($_username): bool
+    {
         $_exist = $this->getRepository()->findByUsername($_username);
         if ($_exist) {
             return true;
         }
-
         return false;
     }
 
@@ -120,20 +127,28 @@ class UserManager
      * @param string $_email
      * @return boolean
      */
-    public function isEmailExist($_email) {
+    public function isEmailExist($_email): bool
+    {
         $_exist = $this->getRepository()->findByEmail($_email);
         if ($_exist) {
             return true;
         }
-
         return false;
     }
 
     /**
-     * Ajouter un utilisateur
-     * @param User $_user
-     * @param Object $_form
-     * @return boolean
+     * @return UploadManager|object
+     * @throws \Exception
+     */
+    public function getUploadManager()
+    {
+        return $this->_container->get(ServiceName::SRV_METIER_USER_UPLOAD);
+    }
+
+    /**
+     * @param $_user
+     * @param $_form
+     * @throws \Exception
      */
     public function addUser($_user, $_form) {
         // Récupérer manager
@@ -149,27 +164,24 @@ class UserManager
         // Traitement du photo
         $_img_photo = $_form['usrPhoto']->getData();
         if ($_img_photo) {
-            $_user_upload_manager = $this->_container->get(ServiceName::SRV_METIER_USER_UPLOAD);
-            $_user_upload_manager->upload($_user, $_img_photo);
+            $this->getUploadManager()->upload($_user,$_img_photo);
         }
 
         $this->saveUser($_user, 'new');
     }
 
     /**
-     * Modifier un utilisateur
-     * @param User $_user
-     * @param Object $_form
-     * @return boolean
+     * @param $_user
+     * @param $_form
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     public function updateUser($_user, $_form) {
-        // Traitement photo
         $_img_photo = $_form['usrPhoto']->getData();
-        // S'il y a un nouveau fichier ajouté, on supprime l'ancien fichier puis on enregistre ce nouveau
         if ($_img_photo) {
-            $_user_upload_manager = $this->_container->get(ServiceName::SRV_METIER_USER_UPLOAD);
-            $_user_upload_manager->deleteOnlyImageById($_user->getId());
-            $_user_upload_manager->upload($_user, $_img_photo);
+            $this->getUploadManager()->deleteOnlyImageById($_user->getId());
+            $this->getUploadManager()->upload($_user,$_img_photo);
         }
 
         // Traitement rôle utilisateur
@@ -187,14 +199,15 @@ class UserManager
     }
 
     /**
-     * Enregistrer un utilisateur
-     * @param User $_user
-     * @param string $_action
-     * @return boolean
+     * @param $_user
+     * @param $_action
+     * @return mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function saveUser($_user, $_action)
     {
-        if ($_action == 'new') {
+        if ($_action === 'new') {
             $this->_entity_manager->persist($_user);
         }
         $this->_entity_manager->flush();
@@ -203,9 +216,10 @@ class UserManager
     }
 
     /**
-     * Supprimer un utilisateur
-     * @param User $_user
-     * @return boolean
+     * @param $_user
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function deleteUser($_user)
     {
@@ -216,19 +230,16 @@ class UserManager
     }
 
     /**
-     * Suppression multiple d'un utilisateur
-     * @param array $_ids
-     * @return boolean
+     * @param $_ids
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function deleteGroupUser($_ids)
     {
-        $_user_upload_manager = $this->_container->get(ServiceName::SRV_METIER_USER_UPLOAD);
-
         if (count($_ids)) {
             foreach ($_ids as $_id) {
-                // Suppression fichier image
-                $_user_upload_manager->deleteImageById($_id);
-
+                $this->getUploadManager()->deleteImageById($_id);
                 // Suppression utilisateur
                 $_user = $this->getUserById($_id);
                 $this->deleteUser($_user);
@@ -254,18 +265,17 @@ class UserManager
     }
 
     /**
-     * Vérification si l'utilisateur n'est autre que client
-     * @param string $_email
-     * @return array
+     * @param $_email
+     * @return bool
      */
-    public function isUserNotClient($_email)
+    public function isUserNotClient($_email): bool
     {
         $_user = $this->getRepository()->findByEmail($_email);
 
         $_is_user_admin = false;
         if ($_user) {
             $_id_role = $_user[0]->getDitRole()->getId();
-            if ($_id_role != RoleName::ID_ROLE_CLIENT)
+            if ($_id_role !== RoleName::ID_ROLE_CLIENT)
                 $_is_user_admin = true;
         }
 
@@ -273,33 +283,27 @@ class UserManager
     }
 
     /**
-     * Réinitialisation mot de passe (mot de passe oublié)
-     * @param string $_user_email
-     * @return boolean
+     * @param $_user_email
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Twig\Error\Error
      */
     public function resettingPassword($_user_email)
     {
-        // Récupérer l'utilisateur
         $_entity_user = $this->getRepository()->findBy(array('email' => $_user_email));
-
         if (count($_entity_user) == 0)
             return false;
-
-        // Générer un mot de passe
         $_generated_password = $this->generatePassword(9);
         $_entity_user[0]->setPlainPassword($_generated_password);
-
-        // Mise à jour mot de passe
         $_user_manager = $this->_container->get('fos_user.user_manager');
         $_user_manager->updatePassword($_entity_user[0]);
-
         $this->saveUser($_entity_user, 'update');
 
-        // Envoyer un email contenant le lien validation compte
         $this->sendEmailUserResettingPassword(
             array(
-                "username" => $_user_email,
-                "password" => $_generated_password
+                'username' => $_user_email,
+                'password' => $_generated_password
             ),
             $_user_email,
             $_entity_user[0]
@@ -309,11 +313,11 @@ class UserManager
     }
 
     /**
-     * Envoie email contenant login et mot de passe (mot de passe oublié)
-     * @param array $_data ex: array("username"=>"test","password"=>"123456")
-     * @param string $_mail_to
-     * @param User $_user
-     * @return boolean
+     * @param array $_data
+     * @param $_mail_to
+     * @param null $_user
+     * @return bool
+     * @throws \Twig\Error\Error
      */
     public function sendEmailUserResettingPassword(array $_data, $_mail_to, $_user = null)
     {
@@ -332,13 +336,13 @@ class UserManager
             ->setTo($_mail_to)
             ->setBody($_email_body);
 
-        $_message->setContentType("text/html");
+        $_message->setContentType('text/html');
         $_result = $this->_container->get('mailer')->send($_message);
 
         $_headers = $_message->getHeaders();
-        $_headers->addIdHeader('Message-ID', uniqid() . "@domain.com");
+        $_headers->addIdHeader('Message-ID', uniqid() . '@domain.com');
         $_headers->addTextHeader('MIME-Version', '1.0');
-        $_headers->addTextHeader('X-Mailer', 'PHP v' . phpversion());
+        $_headers->addTextHeader('X-Mailer', 'PHP v' . PHP_VERSION);
         $_headers->addParameterizedHeader('Content-type', 'text/html', ['charset' => 'utf-8']);
 
         if($_result){
