@@ -49,7 +49,7 @@ class DitMessageNewsletterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\Devintech\Service\MetierManagerBundle\Entity\DitMessageNewsletter'
+            'data_class' => 'App\Devintech\Service\MetierManagerBundle\Entity\DitMessageNewsletter',
         ));
     }
 

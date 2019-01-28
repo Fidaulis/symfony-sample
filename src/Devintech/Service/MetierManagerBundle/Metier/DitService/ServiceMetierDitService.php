@@ -1,21 +1,33 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: jul
+ * Date: 1/28/19
+ * Time: 1:23 PM
+ */
 
 namespace App\Devintech\Service\MetierManagerBundle\Metier\DitService;
 
-use App\Devintech\Service\MetierManagerBundle\Entity\DitService;
-use Doctrine\ORM\EntityManager;
+
 use App\Devintech\Service\MetierManagerBundle\Utils\EntityName;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
 
 class ServiceMetierDitService
 {
+
     private $_entity_manager;
     private $_container;
 
-    public function __construct(EntityManager $_entity_manager, Container $_container)
+    /**
+     * ServiceMetierDitService constructor.
+     * @param EntityManager $_entity_manager
+     * @param Container $_container
+     */
+    public function __construct(EntityManager $_entity_manager,Container $_container)
     {
         $this->_entity_manager = $_entity_manager;
-        $this->_container      = $_container;
+        $this->_container = $_container;
     }
 
     /**
@@ -29,8 +41,7 @@ class ServiceMetierDitService
     }
 
     /**
-     * Récuperer le repository service
-     * @return array
+     * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository
      */
     public function getRepository()
     {
@@ -38,55 +49,41 @@ class ServiceMetierDitService
     }
 
     /**
-     * Récuperer tout les services
      * @return array
      */
-    public function getAllDitService()
-    {
-        return $this->getRepository()->findBy(array(), array('id' => 'DESC'));
-    }
-
-    /**
-     * Récuperer tout les services
-     * @return array
-     */
-    public function getAllDitServiceOrderAsc()
+    public function getAllService()
     {
         return $this->getRepository()->findBy(array(), array('id' => 'ASC'));
     }
 
-    /**
-     * Récuperer un service par identifiant
-     * @param Integer $_id
-     * @return array
-     */
-    public function getDitServiceById($_id)
+    public function getServiceById($_id)
     {
         return $this->getRepository()->find($_id);
     }
-
     /**
-     * Enregistrer un service
-     * @param DitService $_service
-     * @param string $_action
-     * @return boolean
+     * @param $_service
+     * @param $_action
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveDitService($_service, $_action)
+    public function saveService($_service,$_action)
     {
-        if ($_action == 'new') {
+        if ($_action === 'new'){
             $this->_entity_manager->persist($_service);
         }
-        $this->_entity_manager->flush();
 
+        $this->_entity_manager->flush();
         return true;
     }
 
     /**
-     * Supprimer un service
-     * @param DitService $_service
-     * @return boolean
+     * @param $_service
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function deleteDitService($_service)
+    public function deleteService($_service)
     {
         $this->_entity_manager->remove($_service);
         $this->_entity_manager->flush();
@@ -95,34 +92,22 @@ class ServiceMetierDitService
     }
 
     /**
-     * Suppression multiple d'un service
-     * @param array $_ids
-     * @return boolean
+     * @param $_ids
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function deleteGroupDitService($_ids)
+    public function deleteGroup($_ids)
     {
-        if (count($_ids)) {
-            foreach ($_ids as $_id) {
-                $_service = $this->getDitServiceById($_id);
-                $this->deleteDitService($_service);
+        if (count($_ids)):
+            foreach ($_ids as $_id)
+            {
+                $_service = $this->getServiceById($_id);
+                $this->deleteService($_service);
             }
-        }
-
-        return true;
+        endif;
+            return true;
     }
 
-    /**
-     * Récuperer le service par slug
-     * @param string $_slug
-     * @return array
-     */
-    public function getDitServiceBySlug($_slug)
-    {
-        $_service = $this->getRepository()->findBySrvSlug($_slug);
 
-        if ($_service)
-            return $_service[0];
-
-        return false;
-    }
 }

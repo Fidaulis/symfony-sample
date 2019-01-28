@@ -99,16 +99,6 @@ class User extends BaseUser
      */
     private $ditRole;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Devintech\Service\MetierManagerBundle\Entity\DitUserServiceClient", mappedBy="ditUsers", cascade={"persist", "remove"})
-     */
-    private $ditUserServiceClients;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Devintech\Service\MetierManagerBundle\Entity\DitServiceClient", mappedBy="ditUser", cascade={"persist", "remove"})
-     */
-    private $ditServiceClients;
-
 
     /**
      * Constructor
@@ -300,37 +290,6 @@ class User extends BaseUser
         $this->usrNomEntreprise = $usrNomEntreprise;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDitUserServiceClients()
-    {
-        return $this->ditUserServiceClients;
-    }
-
-    /**
-     * @param mixed $ditUserServiceClients
-     */
-    public function setDitUserServiceClients($ditUserServiceClients)
-    {
-        $this->ditUserServiceClients = $ditUserServiceClients;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDitServiceClients()
-    {
-        return $this->ditServiceClients;
-    }
-
-    /**
-     * @param mixed $ditServiceClients
-     */
-    public function setDitServiceClients($ditServiceClients)
-    {
-        $this->ditServiceClients = $ditServiceClients;
-    }
 
     /**
      * Get entreprise

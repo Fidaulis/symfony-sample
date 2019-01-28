@@ -1,17 +1,19 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: jul
+ * Date: 1/28/19
+ * Time: 12:57 PM
+ */
 
 namespace App\Devintech\Service\MetierManagerBundle\Entity;
 
-use App\Devintech\Service\MetierManagerBundle\Form\DitServiceTypeType;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * DitService
  *
  * @ORM\Table(name="dit_service")
- * @UniqueEntity(fields="srvLabel", message="Ce source d'energie existe déjà")
  * @ORM\Entity
  */
 class DitService
@@ -28,67 +30,26 @@ class DitService
     /**
      * @var string
      *
-     * @ORM\Column(name="srv_label", type="string", length=255, nullable=true)
+     * @ORM\Column(name="service_name", type="string", length=45, nullable=true)
      */
-    private $srvLabel;
+    private $serviceName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="srv_desc", type="text", nullable=true)
+     * @ORM\Column(name="service_photo", type="string", length=255, nullable=true)
      */
-    private $srvDesc;
+    private $servicePhoto;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="srv_prix", type="float", nullable=true)
+     * @ORM\Column(name="service_price", type="string", length=255, nullable=true)
      */
-    private $srvPrix;
+    private $servicePrice;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="srv_reduction", type="float", nullable=true)
-     */
-    private $srvReduction;
-
-    /**
-     * @Gedmo\Slug(fields={"srvLabel"}, updatable=true)
-     * @ORM\Column(name="srv_slug", type="string", length=255)
-     */
-    private $srvSlug;
-
-    /**
-     * @var DitServiceTypeType
-     *
-     * @ORM\ManyToOne(targetEntity="App\Devintech\Service\MetierManagerBundle\Entity\DitServiceType")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="dit_srv_tp_id", referencedColumnName="id", onDelete="SET NULL")
-     * })
-     */
-    private $ditServiceType;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="App\Devintech\Service\MetierManagerBundle\Entity\DitServiceOption", inversedBy="ditServices")
-     * @ORM\JoinTable(name="dit_service_service_option",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="dit_srv_id", referencedColumnName="id", onDelete="cascade")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="dit_srv_opt_id", referencedColumnName="id", onDelete="cascade")
-     *   }
-     * )
-     */
-    private $ditServiceOptions;
-
-
-    /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -96,122 +57,60 @@ class DitService
     }
 
     /**
-     * @return string
+     * @param int $id
      */
-    public function getSrvLabel()
+    public function setId($id)
     {
-        return $this->srvLabel;
-    }
-
-    /**
-     * @param string $srvLabel
-     */
-    public function setSrvLabel($srvLabel)
-    {
-        $this->srvLabel = $srvLabel;
+        $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getSrvDesc()
+    public function getServiceName()
     {
-        return $this->srvDesc;
+        return $this->serviceName;
     }
 
     /**
-     * @param string $srvDesc
+     * @param string $serviceName
      */
-    public function setSrvDesc($srvDesc)
+    public function setServiceName($serviceName)
     {
-        $this->srvDesc = $srvDesc;
-    }
-
-    /**
-     * @return float
-     */
-    public function getSrvPrix()
-    {
-        return $this->srvPrix;
-    }
-
-    /**
-     * @param float $srvPrix
-     */
-    public function setSrvPrix($srvPrix)
-    {
-        $this->srvPrix = $srvPrix;
-    }
-
-    /**
-     * @return float
-     */
-    public function getSrvReduction()
-    {
-        return $this->srvReduction;
-    }
-
-    /**
-     * @param float $srvReduction
-     */
-    public function setSrvReduction($srvReduction)
-    {
-        $this->srvReduction = $srvReduction;
-    }
-
-    /**
-     * @return DitServiceTypeType
-     */
-    public function getDitServiceType()
-    {
-        return $this->ditServiceType;
-    }
-
-    /**
-     * @param DitServiceTypeType $ditServiceType
-     */
-    public function setDitServiceType($ditServiceType)
-    {
-        $this->ditServiceType = $ditServiceType;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDitServiceOptions()
-    {
-        return $this->ditServiceOptions;
-    }
-
-    /**
-     * @param mixed $ditServiceOptions
-     */
-    public function setDitServiceOptions($ditServiceOptions)
-    {
-        $this->ditServiceOptions = $ditServiceOptions;
+        $this->serviceName = $serviceName;
     }
 
     /**
      * @return string
      */
-    public function getSrvLabelString()
+    public function getServicePhoto()
     {
-        return $this->srvLabel . ' (' . $this->srvPrix . ' €)';
+        return $this->servicePhoto;
     }
 
     /**
-     * @return mixed
+     * @param string $servicePhoto
      */
-    public function getSrvSlug()
+    public function setServicePhoto($servicePhoto)
     {
-        return $this->srvSlug;
+        $this->servicePhoto = $servicePhoto;
     }
 
     /**
-     * @param mixed $srvSlug
+     * @return string
      */
-    public function setSrvSlug($srvSlug)
+    public function getServicePrice()
     {
-        $this->srvSlug = $srvSlug;
+        return $this->servicePrice;
     }
+
+    /**
+     * @param string $servicePrice
+     */
+    public function setServicePrice($servicePrice)
+    {
+        $this->servicePrice = $servicePrice;
+    }
+
+
 }
