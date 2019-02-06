@@ -17,7 +17,7 @@ class DitMessageNewsletterController extends Controller
      * Afficher tout les messages
      * @return Render page
      */
-    public function indexAction(): Render
+    public function indexAction()
     {
         // Récupérer manager
         $_message_manager = $this->get(ServiceName::SRV_METIER_MESSAGE_NEWSLETTER);
@@ -35,7 +35,7 @@ class DitMessageNewsletterController extends Controller
      * @param DitMessageNewsletter $_message
      * @return Render page
      */
-    public function editAction(DitMessageNewsletter $_message): Render
+    public function editAction(DitMessageNewsletter $_message)
     {
         if (!$_message) {
             throw $this->createNotFoundException('Unable to find DitMessageNewsletter entity.');
@@ -54,7 +54,7 @@ class DitMessageNewsletterController extends Controller
      * @param Request $_request requête
      * @return Render page
      */
-    public function newAction(Request $_request): Render
+    public function newAction(Request $_request)
     {
         // Récupérer manager
         $_message_manager = $this->get(ServiceName::SRV_METIER_MESSAGE_NEWSLETTER);
@@ -84,7 +84,7 @@ class DitMessageNewsletterController extends Controller
      * @param DitMessageNewsletter $_message
      * @return Render page
      */
-    public function updateAction(Request $_request, DitMessageNewsletter $_message): Render
+    public function updateAction(Request $_request, DitMessageNewsletter $_message)
     {
         // Récupérer manager
         $_message_manager = $this->get(ServiceName::SRV_METIER_MESSAGE_NEWSLETTER);
@@ -116,7 +116,7 @@ class DitMessageNewsletterController extends Controller
      * @param DitMessageNewsletter $_message
      * @return Render page
      */
-    public function sendUpdateAction(Request $_request, DitMessageNewsletter $_message): Render
+    public function sendUpdateAction(Request $_request, DitMessageNewsletter $_message)
     {
         // Récupérer manager
         $_message_manager = $this->get(ServiceName::SRV_METIER_MESSAGE_NEWSLETTER);

@@ -1,6 +1,6 @@
 {% extends 'front_site_office/base_front.html.twig' %}
 
-{% block title %} DevInTech {% endblock %}
+{% block title %} DevinArt {% endblock %}
 
 {% block body %}
     <div class="container-fluid gtco-banner-area">
@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid gtco-features" id="about">
+    <div class="container-fluid gtco-features" id="services">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -108,7 +108,7 @@
         </div>
     </div>
 
-    <div class="container-fluid gtco-testimonials">
+    <div class="container-fluid gtco-testimonials" id="about">
         <div class="container">
             <h2>TEAM</h2>
             <div class="owl-carousel owl-carousel1 owl-theme">
@@ -136,6 +136,17 @@
     </div>
     <div id="fh5co-practice" class="fh5co-bg-section">
         <div class="container">
+            <div class="col-md-12">
+                <h1 class="ml8">
+                      <span class="letters-container text-center">
+                        <span class="letters letters-left text-orange">Nos Services</span>
+                        <span class="letters bang">!</span>
+                      </span>
+                    <span class="circle circle-white"></span>
+                    <span class="circle circle-dark"></span>
+                    <span class="circle circle-container"><span class="circle circle-dark-dashed"></span></span>
+                </h1>
+            </div>
             <div class="row animate-box fadeInUp animated-fast">
                 <div class="col-md-12 text-center fh5co-heading">
                     <h2>Our Legal Practice Area</h2>
@@ -147,10 +158,10 @@
                 <div class="col-md-4 text-center animate-box fadeInUp animated-fast">
                     <div class="services">
 						<span class="icon">
-							<i class="fa fa-home"></i>
+							<i class="fa fa-sitemap"></i>
 						</span>
                         <div class="desc">
-                            <h3><a href="#">Real Estate Law</a></h3>
+                            <h3><a href="#">Web</a></h3>
                             <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
                                 provident. Odit ab aliquam dolor eius.</p>
                         </div>
@@ -159,10 +170,10 @@
                 <div class="col-md-4 text-center animate-box fadeInUp animated-fast">
                     <div class="services">
 						<span class="icon">
-							<i class="fa fa-eye"></i>
+							<i class="fa fa-phone"></i>
 						</span>
                         <div class="desc">
-                            <h3><a href="#">Insurance Law</a></h3>
+                            <h3><a href="#">Mobile</a></h3>
                             <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
                                 provident. Odit ab aliquam dolor eius.</p>
                         </div>
@@ -171,46 +182,10 @@
                 <div class="col-md-4 text-center animate-box fadeInUp animated-fast">
                     <div class="services">
 						<span class="icon">
-							<i class="fa fa-shopping-cart"></i>
+							<i class="fa fa-desktop"></i>
 						</span>
                         <div class="desc">
-                            <h3><a href="#">Business Law</a></h3>
-                            <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-                                provident. Odit ab aliquam dolor eius.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center animate-box fadeInUp animated-fast">
-                    <div class="services">
-						<span class="icon">
-							<i class="fa fa-umbrella"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Personal Injury</a></h3>
-                            <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-                                provident. Odit ab aliquam dolor eius.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center animate-box fadeInUp animated-fast">
-                    <div class="services">
-						<span class="icon">
-							<i class="fa fa-heart"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Medical Neglegence</a></h3>
-                            <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-                                provident. Odit ab aliquam dolor eius.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center animate-box fadeInUp animated-fast">
-                    <div class="services">
-						<span class="icon">
-							<i class="fa fa-heartbeat"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Criminal Defense</a></h3>
+                            <h3><a href="#">Desktop</a></h3>
                             <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
                                 provident. Odit ab aliquam dolor eius.</p>
                         </div>
@@ -223,171 +198,32 @@
         </div>
     </div>
 
-    <div id="fh5co-testimonial" class="fh5co-bg-section">
+    <div id="fh5co-practice" class="fh5co-bg-section">
         <div class="container">
-            <div class="row animate-box fadeInUp animated-fast">
-                <div class="col-md-12 text-center">
-                    <h2>Testimonials</h2>
+            <div class="row">
+                <div class="col-md-6 h-100 text-center animate-box bg-danger fadeInUp animated-fast" style="height: 400px!important;">
+                    <h1 class="ml3 text-white">Web Developpement</h1>
+                </div>
+                <div class="col-md-6 h-100 text-center animate-box bg-warning fadeInUp animated-fast" style="height: 400px!important;">
+                    <h1 class="ml12 text-white">Mobile Developpement</h1>
+                </div>
+                <div class="col-md-6 h-100 text-center animate-box bg-info fadeInUp animated-fast" style="height: 400px!important;">
+                    <h1 class="ml15 text-white">
+                        <span class="word">Design</span>
+                        <span class="word">Integration</span>
+                        <span class="word">SEO</span>
+                    </h1>
+                </div>
+                <div class="col-md-6 h-100 text-center animate-box bg-success fadeInUp animated-fast" style="height: 400px!important;">
+                    <h1 class="ml16 text-white">Desktop application</h1>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row animate-box fadeInUp animated-fast">
-                        <div class="owl-carousel owl-carousel-fullwidth owl-theme owl-loaded">
-                            <div class="owl-stage-outer owl-height" style="height: 285px;">
-                                <div class="owl-stage"
-                                     style="transform: translate3d(-1950px, 0px, 0px); transition: all 0s ease 0s; width: 6825px;">
-                                    <div class="owl-item cloned" style="width: 975px; margin-right: 0px;">
-                                        <div class="item">
-                                            <div class="testimony-slide active text-center">
-                                                <figure>
-                                                    <img src="{{ asset('front_site_office/images/customer1.jpg') }}"
-                                                         alt="user">
-                                                </figure>
-                                                <span>John Doe, via <a href="#" class="twitter">Twitter</a></span>
-                                                <blockquote>
-                                                    <p>“Separated they live in Bookmarksgrove right at the coast of the
-                                                        Semantics, a large language ocean.”</p>
-                                                </blockquote>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="owl-item cloned" style="width: 975px; margin-right: 0px;">
-                                        <div class="item">
-                                            <div class="testimony-slide active text-center">
-                                                <figure>
-                                                    <img src="{{ asset('front_site_office/images/customer1.jpg') }}"
-                                                         alt="user">
-                                                </figure>
-                                                <span>John Doe, via <a href="#" class="twitter">Twitter</a></span>
-                                                <blockquote>
-                                                    <p>“Far from the countries Vokalia and Consonantia, there live the
-                                                        blind texts. Separated they live in Bookmarksgrove right at the
-                                                        coast of the Semantics, a large language ocean.”</p>
-                                                </blockquote>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="owl-item active" style="width: 975px; margin-right: 0px;">
-                                        <div class="item">
-                                            <div id="fh5co-started"
-                                                 style="background-image:url({{ asset('front_site_office/images/customer1.jpg') }});">
-                                                <div class="overlay"></div>
-                                                <div class="container">
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center fh5co-heading">
-                                                            <h2>Legal Advice</h2>
-                                                            <p>We help people effectively fight their offenders back and
-                                                                successfully defend their own stand!</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center">
-                                                            <p><a href="#"
-                                                                  class="btn btn-default btn-lg">Consultation</a></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="owl-item" style="width: 975px; margin-right: 0px;">
-                                        <div class="item">
-                                            <div id="fh5co-started"
-                                                 style="background-image:url({{ asset('front_site_office/images/customer1.jpg') }});">
-                                                <div class="overlay"></div>
-                                                <div class="container">
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center fh5co-heading">
-                                                            <h2>Legal Advice</h2>
-                                                            <p>We help people effectively fight their offenders back and
-                                                                successfully defend their own stand!</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center">
-                                                            <p><a href="#"
-                                                                  class="btn btn-default btn-lg">Consultation</a></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="owl-item" style="width: 975px; margin-right: 0px;">
-                                        <div class="item">
-                                            <div id="fh5co-started"
-                                                 style="background-image:url({{ asset('front_site_office/images/customer1.jpg') }});">
-                                                <div class="overlay"></div>
-                                                <div class="container">
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center fh5co-heading">
-                                                            <h2>Legal Advice</h2>
-                                                            <p>We help people effectively fight their offenders back and
-                                                                successfully defend their own stand!</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center">
-                                                            <p><a href="#"
-                                                                  class="btn btn-default btn-lg">Consultation</a></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="owl-item cloned" style="width: 975px; margin-right: 0px;">
-                                        <div class="item">
-                                            <div id="fh5co-started"
-                                                 style="background-image:url({{ asset('front_site_office/images/customer1.jpg') }});">
-                                                <div class="overlay"></div>
-                                                <div class="container">
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center fh5co-heading">
-                                                            <h2>Legal Advice</h2>
-                                                            <p>We help people effectively fight their offenders back and
-                                                                successfully defend their own stand!</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center">
-                                                            <p><a href="#"
-                                                                  class="btn btn-default btn-lg">Consultation</a></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="owl-item cloned" style="width: 975px; margin-right: 0px;">
-                                        <div class="item">
-                                            <div id="fh5co-started"
-                                                 style="background-image:url({{ asset('front_site_office/images/customer1.jpg') }});">
-                                                <div class="overlay"></div>
-                                                <div class="container">
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center fh5co-heading">
-                                                            <h2>Legal Advice</h2>
-                                                            <p>We help people effectively fight their offenders back and
-                                                                successfully defend their own stand!</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row animate-box">
-                                                        <div class="col-md-12 text-center">
-                                                            <p><a href="#"
-                                                                  class="btn btn-default btn-lg">Consultation</a></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-12">
+                <h1 class="ml4 text-center text-warning">
+                    <span class="letters letters-1 text-blue">Ready?</span>
+                    <span class="letters letters-2 text-blue">Set</span>
+                    <span class="letters letters-3 text-blue">Go!</span>
+                </h1>
             </div>
         </div>
     </div>

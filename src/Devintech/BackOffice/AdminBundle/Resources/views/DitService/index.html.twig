@@ -1,6 +1,7 @@
 {% extends 'backoffice/base_admin.html.twig' %}
 
 {% block title %}{{ parent() }}Service {% endblock %}
+{% set menu_service = true %}
 
 {% block body %}
     {% for flashMessage in app.session.flashbag.get('success') %}
@@ -15,9 +16,13 @@
     {% endfor %}
 
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-md-12">
             <div class="box">
+
                 <div class="box-header">
+                    <div class="text-right">
+                        <a href="{{ path('service_new') }}" class="btn btn-primary">Ajouter</a>
+                    </div>
                     <div class="list-count">
                         <span class="title-count-text"> TOTAL: </span><span class="title-count"></span>
                     </div>

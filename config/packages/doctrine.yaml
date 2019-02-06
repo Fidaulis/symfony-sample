@@ -11,10 +11,13 @@ doctrine:
         driver: 'pdo_mysql'
         server_version: '5.7'
         charset: utf8mb4
-        dbname: devintech
-        host: 127.0.0.1
-        user: root
-        password: null
+        host: 'localhost'
+        user: 'root'
+        password: 'null'
+#        dbname: '%env(DATABASE_NAME)%'
+#        host: '%env(DATABASE_HOST)%'
+#        user: '%env(DATABASE_USER)%'
+#        password: '%env(DATABASE_PWD)%'
         options:
             # PDO::MYSQL_ATTR_INIT_COMMAND
             1002: "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))"

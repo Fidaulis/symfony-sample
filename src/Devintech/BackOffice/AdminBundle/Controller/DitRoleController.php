@@ -17,7 +17,7 @@ class DitRoleController extends Controller
      * Afficher tout les rôles
      * @return Render page
      */
-    public function indexAction(): Render
+    public function indexAction()
     {
         // Récupérer manager
         $_role_manager = $this->get(ServiceName::SRV_METIER_USER_ROLE);
@@ -35,7 +35,7 @@ class DitRoleController extends Controller
      * @param DitRole $_role
      * @return Render page
      */
-    public function editAction(DitRole $_role): Render
+    public function editAction(DitRole $_role)
     {
         if (!$_role) {
             throw $this->createNotFoundException('Unable to find DitRole entity.');
@@ -54,7 +54,7 @@ class DitRoleController extends Controller
      * @param Request $_request requête
      * @return Render page
      */
-    public function newAction(Request $_request): Render
+    public function newAction(Request $_request)
     {
         // Récupérer manager
         $_role_manager = $this->get(ServiceName::SRV_METIER_USER_ROLE);
@@ -84,7 +84,7 @@ class DitRoleController extends Controller
      * @param DitRole $_role
      * @return Render page
      */
-    public function updateAction(Request $_request, DitRole $_role): Render
+    public function updateAction(Request $_request, DitRole $_role)
     {
         // Récupérer manager
         $_role_manager = $this->get(ServiceName::SRV_METIER_USER_ROLE);

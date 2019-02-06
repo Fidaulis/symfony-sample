@@ -26,7 +26,7 @@ class DitEmailNewsletterController extends Controller
      * Afficher tout les emails
      * @return Render page
      */
-    public function indexAction(): Render
+    public function indexAction()
     {
         // Récupérer tout les emails
         $_emails = $this->setEmailSender()->getAllEmailNewsletter();
@@ -41,7 +41,7 @@ class DitEmailNewsletterController extends Controller
      * @param DitEmailNewsletter $_email
      * @return Render page
      */
-    public function editAction(DitEmailNewsletter $_email): Render
+    public function editAction(DitEmailNewsletter $_email)
     {
         if (!$_email) {
             throw $this->createNotFoundException('Unable to find DitEmailNewsletter entity.');
@@ -60,7 +60,7 @@ class DitEmailNewsletterController extends Controller
      * @param Request $_request requête
      * @return Render page
      */
-    public function newAction(Request $_request): Render
+    public function newAction(Request $_request)
     {
         $_email = new DitEmailNewsletter();
         $_form  = $this->createCreateForm($_email);
@@ -84,7 +84,7 @@ class DitEmailNewsletterController extends Controller
      * @param DitEmailNewsletter $_email
      * @return Render page
      */
-    public function updateAction(Request $_request, DitEmailNewsletter $_email): Render
+    public function updateAction(Request $_request, DitEmailNewsletter $_email)
     {
         if (!$_email) {
             throw $this->createNotFoundException('Unable to find DitEmailNewsletter entity.');
